@@ -1,0 +1,17 @@
+{
+  "name": "promise",
+  "version": "1.0.0",
+  "description": "a implementations of Promises/A+",
+  "main": "index.js",
+  "scripts": {
+    "test": "node ./test.js"
+  },
+  "keywords": [
+    "promise"
+  ],
+  "author": "NailMan",
+  "license": "MIT",
+  "dependencies": {
+    "promises-aplus-tests": "^2.1.1"
+  }
+}
