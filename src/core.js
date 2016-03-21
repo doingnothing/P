@@ -221,7 +221,7 @@
     if (module && module.exports) {
         module.exports = exports = Promise;
     } else {
-        root.Promise = Promise;
+        root.DPromise = Promise;
     }
 
 })(this);

@@ -1,17 +1,26 @@
 {
-  "name": "promise",
+  "name": "nm-promise",
   "version": "1.0.0",
-  "description": "a implementations of Promises/A+",
-  "main": "index.js",
+  "description": "a light-weight implementations of Promises/A+",
+  "main": "./d-promise",
   "scripts": {
-    "test": "node ./test.js"
+    "test": "node ./test/test.js"
   },
   "keywords": [
-    "promise"
+    "promise",
+    "light-weight promise"
   ],
-  "author": "NailMan",
+  "author": {
+    "email": "lehuading@qq.com",
+    "name": "NailMan",
+    "url": "http://doingnothing.github.io"
+  },
   "license": "MIT",
-  "dependencies": {
+  "devDependencies": {
     "promises-aplus-tests": "^2.1.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/doingnothing/P.git"
   }
 }
