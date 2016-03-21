@@ -1,5 +1,5 @@
 {
-  "name": "nm-promise",
+  "name": "d-promise",
   "version": "1.0.0",
   "description": "a light-weight implementations of Promises/A+",
   "main": "./d-promise",
