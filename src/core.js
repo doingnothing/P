@@ -265,7 +265,11 @@
 
             for (var i = 0; i < max; i = i + 1) {
                 (function (index) {
-                    jobs[i].then(function (value) {
+                    var job = jobs[index];
+                    if (!(job instanceof Promise)) {
+                        job = new Promise(job);
+                    }
+                    job.then(function (value) {
                         check(null, value, index);
                     }, function (reason) {
                         check(reason || true);
@@ -301,7 +305,11 @@
 
             for (var i = 0; i < max; i = i + 1) {
                 (function (index) {
-                    jobs[i].then(function (value) {
+                    var job = jobs[index];
+                    if (!(job instanceof Promise)) {
+                        job = new Promise(job);
+                    }
+                    job.then(function (value) {
                         check(null, value, index);
                     }, function (reason) {
                         check(reason || true);

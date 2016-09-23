@@ -10,11 +10,11 @@ describe('Promise', function () {
                         resolve();
                     }, 10);
                 }),
-                new Promise(function (resolve, reject) {
+                function (resolve, reject) {
                     setTimeout(function () {
                         resolve();
                     }, 20);
-                }),
+                },
                 new Promise(function (resolve, reject) {
                     setTimeout(function () {
                         resolve();
@@ -31,11 +31,11 @@ describe('Promise', function () {
                         resolve();
                     }, 10);
                 }),
-                new Promise(function (resolve, reject) {
+                function (resolve, reject) {
                     setTimeout(function () {
                         reject();
                     }, 20);
-                }),
+                },
                 new Promise(function (resolve, reject) {
                     setTimeout(function () {
                         resolve();
@@ -55,11 +55,11 @@ describe('Promise', function () {
                         resolve();
                     }, 10);
                 }),
-                new Promise(function (resolve, reject) {
+                function (resolve, reject) {
                     setTimeout(function () {
                         reject();
                     }, 20);
-                }),
+                },
                 new Promise(function (resolve, reject) {
                     setTimeout(function () {
                         resolve();
@@ -77,11 +77,11 @@ describe('Promise', function () {
                         reject();
                     }, 10);
                 }),
-                new Promise(function (resolve, reject) {
+                function (resolve, reject) {
                     setTimeout(function () {
                         reject();
                     }, 20);
-                }),
+                },
                 new Promise(function (resolve, reject) {
                     setTimeout(function () {
                         reject();
@@ -138,4 +138,24 @@ describe('Promise', function () {
             });
         });
     });
+});
+
+Promise.all([
+    new Promise(function (resolve, reject) {
+        setTimeout(function () {
+            resolve();
+        }, 10);
+    }),
+    new Promise(function (resolve, reject) {
+        setTimeout(function () {
+            resolve();
+        }, 20);
+    }),
+    new Promise(function (resolve, reject) {
+        setTimeout(function () {
+            resolve();
+        }, 30);
+    })
+]).then(function () {
+    done();
 });
