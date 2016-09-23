@@ -15,6 +15,7 @@
         var o = this;
         o._head = o._tail = null;
     }
+
     Queue.prototype = {
         enqueue: function (ele) {
             var o = this;
@@ -70,6 +71,7 @@
             try {
                 then = x.then;
             } catch (e) {
+                Promise.catch(e);
                 promise._reject(e);
                 return;
             }
@@ -112,13 +114,30 @@
         o._q1 = new Queue();
         o._q2 = new Queue();
         if (isFunction(asyncJob)) {
-            asyncJob(function (value) {
-                o._resolve(value)
-            }, function (reason) {
-                o._reject(reason);
-            });
+            try {
+                asyncJob(function (value) {
+                    o._resolve(value)
+                }, function (reason) {
+                    o._reject(reason);
+                });
+            } catch (e) {
+                Promise.catch(e);
+            }
         }
     }
+
+    var debug = false;
+
+    Promise.debug = function () {
+        debug = true;
+    };
+
+    Promise.catch = function (e) {
+        if (debug) {
+            console.error(e);
+        }
+    };
+
     Promise.prototype = {
 
         PENDING: 0,
@@ -177,6 +196,7 @@
                     try {
                         x = handler(arg);
                     } catch (e) {
+                        Promise.catch(e);
                         o._reject(e);
                         return;
                     }
@@ -218,10 +238,110 @@
         }
     };
 
+
+    // 并行，所有完成才算完成
+    Promise.all = function (jobs) {
+        return new Promise(function (resolve, reject) {
+            var max = jobs.length;
+            var count = 0;
+            var flag = false;
+            var values = [];
+
+            function check(err, value, index) {
+                if (flag) {
+                    return;
+                }
+                if (err !== null) {
+                    flag = true;
+                    reject(err);
+                }
+                values[index] = value;
+                count += 1;
+                if (count === max) {
+                    flag = true;
+                    resolve(values);
+                }
+            }
+
+            for (var i = 0; i < max; i = i + 1) {
+                (function (index) {
+                    jobs[i].then(function (value) {
+                        check(null, value, index);
+                    }, function (reason) {
+                        check(reason || true);
+                    });
+                }(i));
+            }
+        })
+    };
+
+    // 并行，只要有一个完成就算完成
+    Promise.race = function (jobs) {
+        return new Promise(function (resolve, reject) {
+
+            var max = jobs.length;
+            var flag = false;
+            var count = 0;
+
+            function check(err, value) {
+                if (flag) {
+                    return;
+                }
+                if (err == null) {
+                    flag = true;
+                    resolve(value);
+                } else {
+                    count += 1;
+                    if (count >= max) {
+                        flag = true;
+                        reject(err);
+                    }
+                }
+            }
+
+            for (var i = 0; i < max; i = i + 1) {
+                (function (index) {
+                    jobs[i].then(function (value) {
+                        check(null, value, index);
+                    }, function (reason) {
+                        check(reason || true);
+                    });
+                }(i));
+            }
+        })
+    };
+
+
+    // 串行
+    Promise.step = function (jobs) {
+
+        var max = jobs.length;
+
+        var p2 = new Promise();
+
+        var next = function (at, value) {
+            if (at >= max) {
+                return p2._resolve(value);
+            }
+            new Promise(jobs[at]).then(function (value) {
+                next(at + 1, value)
+            }, function (reason) {
+                p2._reject(reason);
+            })
+        };
+        new Promise(jobs[0]).then(function (value) {
+            next(1, value);
+        }, function (reason) {
+            p2._reject(reason);
+        });
+
+        return p2;
+    };
+
     if (module && module.exports) {
         module.exports = exports = Promise;
     } else {
-        root.DPromise = Promise;
+        root.LittlePromise = Promise;
     }
 
 })(this);

@@ -1,0 +1,3 @@
+// require('./promisesAplusTests');
+
+require('./extendTest');

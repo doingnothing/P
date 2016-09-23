@@ -1,10 +1,12 @@
 {
-  "name": "d-promise",
-  "version": "1.0.0",
+  "name": "little-promise",
+  "version": "1.1.0",
   "description": "a light-weight implementations of Promises/A+",
-  "main": "./d-promise",
+  "main": "./little-promise",
   "scripts": {
-    "test": "node ./test/test.js"
+    "extendTest": "mocha ./test/extendTest.js",
+    "promisesAplusTest": "node ./test/promisesAplusTests",
+    "test": "npm run extendTest && npm run promisesAplusTest"
   },
   "keywords": [
     "promise",
@@ -17,6 +19,7 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "mocha": "^3.0.2",
     "promises-aplus-tests": "^2.1.1"
   },
   "repository": {

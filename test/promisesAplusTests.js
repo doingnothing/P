@@ -1,6 +1,6 @@
 var promisesAplusTests = require("promises-aplus-tests");
 
-var Promise = require('../d-promise');
+var Promise = require('../little-promise');
 
 var adapter = {};
 adapter.resolved = function (value) {
