@@ -142,6 +142,10 @@ LPromise.all([
 });
 ```
 
+### 调试
+
+由于Promise规范的特点，对于`throw`报错的错误非常难调试。传给Promise的函数必须自己处理所有可能发生的错误，否则Promise自己会吃掉，并仅在返回的Promise实例中才能捕获。因此，我为了方便，添加了一个debug的静态方法。当调用`LPromise.debug()`时，所有位置的报错都会通过`console.error`丢出，可以快速找到出错位置。所以建议开发的时候调用`debug`接口。
+
 如果你想一起来开发，欢迎和我联系：lehuading@qq.com。
 
 <a href="http://promises-aplus.github.com/promises-spec">
