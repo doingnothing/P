@@ -40,11 +40,12 @@ new LPromise(function (resolve, reject) {
 
 ### 静态方法
 
-除了上面实例中的基本使用方法，little-promise还提供了常见的串行和并行方法。
+除了上面实例中的基本使用方法，little-promise还提供了常见的串行和并行的静态方法。
 
 #### `all`
 
 参数：little-promise实例或异步函数组成的数组
+
 返回：一个little-promise实例p
 
 promise数组同时运行。当所有promise都处于完成状态，p从等待状态（pending）变为完成状态（resolved）；当有promise处于失败状态，p从等待状态变为失败状态（rejected）。
@@ -79,6 +80,7 @@ LPromise.all([
 #### `race`
 
 参数：little-promise实例或异步函数组成的数组
+
 返回：一个little-promise实例p
 
 promise数组同时运行。当有一个promise处于完成状态，p从等待状态变为完成状态；当所有的promise处于失败状态，p从等待状态变为失败状态。
@@ -112,7 +114,8 @@ LPromise.race([
 
 #### `step`
 
-参数：异步函数组成的数组（注意与上面的方法传入的参数的区别，不能在转入little-promise实例）
+参数：异步函数组成的数组（**注意与上面的方法传入的参数的区别，不能在传入little-promise实例**）
+
 返回：一个little-promise实例p
 
 异步函数依次执行。当所有异步函数顺序执行完成后，p从等待状态变为完成状态；当有一个异步函数执行失败，p从等待状态变为失败状态。
@@ -147,11 +150,6 @@ LPromise.all([
 由于Promise规范的特点，对于`throw`报错的错误非常难调试。传给Promise的函数必须自己处理所有可能发生的错误，否则Promise自己会吃掉，并仅在返回的Promise实例中才能捕获。因此，我为了方便，添加了一个debug的静态方法。当调用`LPromise.debug()`时，所有位置的报错都会通过`console.error`丢出，可以快速找到出错位置。所以建议开发的时候调用`debug`接口。
 
 如果你想一起来开发，欢迎和我联系：lehuading@qq.com。
-
-<a href="http://promises-aplus.github.com/promises-spec">
-    <img src="http://promises-aplus.github.com/promises-spec/assets/logo-small.png"
-         align="right" alt="Promises/A+ logo" />
-</a>
 
 ## Promises/A+ 规范
 
