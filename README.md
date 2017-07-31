@@ -114,7 +114,7 @@ LPromise.race([
 
 #### `step`
 
-参数：异步函数组成的数组（**注意与上面的方法传入的参数的区别，不能在传入little-promise实例**）
+参数：异步函数组成的数组（**注意与上面的方法传入的参数的区别，不能再传入little-promise实例**）
 
 返回：一个little-promise实例p
 
